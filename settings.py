@@ -62,18 +62,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ESTO ES LO CORRECTO (Copia y pega esto al final)
+# --- CONFIGURACIÓN PARA RENDER (ARCHIVOS ESTÁTICOS) ---
+
+# Asegúrate de que STATIC_URL tenga la barra al principio
 STATIC_URL = '/static/'
 
-# Definimos la carpeta SIEMPRE, no solo en modo producción
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Activamos WhiteNoise para comprimir archivos
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
-# CONFIGURACIÓN DE LOGIN Y MEDIA
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Esto le dice a Render dónde poner los estilos
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    # Configuración para tu PC (local)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
