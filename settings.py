@@ -62,10 +62,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# ESTO ES LO CORRECTO (Copia y pega esto al final)
+STATIC_URL = '/static/'
+
+# Definimos la carpeta SIEMPRE, no solo en modo producción
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Activamos WhiteNoise para comprimir archivos
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
 # CONFIGURACIÓN DE LOGIN Y MEDIA
 LOGIN_REDIRECT_URL = '/'
