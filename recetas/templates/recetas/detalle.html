@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mt-6">
+
+    {% if receta.imagen %}
+        <div class="h-64 w-full relative">
+            <img src="{{ receta.imagen.url }}" class="w-full h-full object-cover">
+            <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black to-transparent w-full p-6">
+                <h1 class="text-4xl font-bold text-white shadow-sm">{{ receta.titulo }}</h1>
+            </div>
+        </div>
+    {% else %}
+        <div class="bg-gray-800 p-8 text-center text-white">
+            <h1 class="text-4xl font-bold">{{ receta.titulo }}</h1>
+        </div>
+    {% endif %}
+
+    <div class="p-8">
+        {% if user == receta.autor %}
+    <div class="mb-4 flex justify-end gap-2">
+        <a href="{% url 'editar_receta' receta.id %}" 
+           class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded shadow">
+            ✏️ Editar Receta
+        </a>
+    </div>
+{% endif %}
+
+        <div class="flex justify-around bg-gray-50 p-4 rounded-lg mb-8 border border-gray-100">
+            <div class="text-center">
+                <span class="block text-2xl font-bold text-blue-600">{{ receta.proteinas }}g</span>
+                <span class="text-xs text-gray-500 uppercase font-bold">Proteína</span>
+            </div>
+            <div class="text-center">
+                <span class="block text-2xl font-bold text-yellow-600">{{ receta.carbohidratos }}g</span>
+                <span class="text-xs text-gray-500 uppercase font-bold">Carbos</span>
+            </div>
+            <div class="text-center">
+                <span class="block text-2xl font-bold text-red-600">{{ receta.grasas }}g</span>
+                <span class="text-xs text-gray-500 uppercase font-bold">Grasas</span>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">🛒 Ingredientes</h3>
+                <p class="whitespace-pre-line text-gray-700 leading-relaxed bg-gray-50 p-4 rounded">
+                    {{ receta.ingredientes }}
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">👨‍🍳 Preparación</h3>
+                <p class="whitespace-pre-line text-gray-700 leading-relaxed">
+                    {{ receta.descripcion }}
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <a href="{% url 'lista_recetas' %}" class="text-indigo-600 hover:underline">← Volver a la lista</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

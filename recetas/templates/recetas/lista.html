@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <form method="GET" class="flex gap-2">
+        <input name="q" placeholder="Buscar..." class="p-2 border rounded">
+        <button class="bg-gray-800 text-white px-4 rounded">Ir</button>
+    </form>
+    <a href="{% url 'crear_receta' %}" class="bg-indigo-600 text-white px-4 py-2 rounded">+ Crear</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for r in recetas %}
+    <div class="bg-white p-4 rounded shadow">
+        {% if r.imagen %}<img src="{{ r.imagen.url }}" class="w-full h-40 object-cover rounded mb-4">{% endif %}
+        <h2 class="font-bold text-lg hover:text-indigo-600 transition">
+            <a href="{% url 'detalle_receta' r.id %}">
+                {{ r.titulo }}
+            </a>
+        </h2>
+        <p class="text-sm text-gray-600 mb-2">{{ r.descripcion }}</p>
+        <div class="text-xs font-bold text-indigo-600">Prot: {{ r.proteinas }}g | Carbs: {{ r.carbohidratos }}g</div>
+    </div>
+    {% empty %}
+    <p>No hay recetas aún.</p>
+    {% endfor %}
+</div>
+{% endblock %}
